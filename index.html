@@ -1,0 +1,39 @@
+<head>
+    <title>ChronoMap</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="base.js"></script>
+</head>
+<body>
+    <div class="base-container">
+        <div class="content-container">
+            <div class="region-container">
+                <select class="region-select" id="region-select" onchange="updateRegion()">
+                    <option value="Europe">Europe</option>
+                    <option value="Asia">Asia</option>
+                    <option value="Africa">Africa</option>
+                </select>
+            </div>
+            <div class="map-container">
+                <img class="map" src="test.jpg" alt="Region Map" id="map">
+            </div>
+            <div class="footer-container">
+                <div class="date-container">
+                    <span class="date" id="date">1281</span>
+                </div>
+                <div class="slider-container">
+                    <button class="date-increment-button" onclick="prevDate()"><</button>
+                    <input type="range" min="1" max="3" value="2" onchange="updateDate()" class="date-slider" id="date-slider">
+                    <button class="date-increment-button" onclick="nextDate()">></button>
+                </div>
+            </div>
+        </div>
+        <div class="sidebar-container">
+            <div class="title-container">
+                <span class="title" id="title">Lorem ipsum dolor sit amet</span>
+            </div>
+            <div class="description-container">
+                <span class="description" id="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi ut magna dui. Integer vel dolor nisl. Cras sollicitudin faucibus purus, ac pellentesque tortor gravida in. Sed fermentum ex id eros pellentesque, ac porttitor ex vulputate. Sed fermentum nulla a eros placerat lobortis. Aenean volutpat in mauris sit amet imperdiet. Suspendisse tristique urna vitae eleifend volutpat. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nunc leo orci, efficitur vitae gravida sit amet, lacinia eget dolor. Ut pulvinar, turpis eget iaculis auctor, justo orci porta dui, ut mollis metus mi ut magna. Pellentesque eget luctus urna. Donec a pretium arcu. In mattis massa sed ultrices rutrum. Vestibulum nibh sem, blandit eget odio ut, cursus egestas metus. </span>
+            </div>
+        </div>
+    </div>
+</body>
