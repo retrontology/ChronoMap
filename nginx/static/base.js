@@ -60,7 +60,9 @@ function changeDate() {
     var frame = frames[slider.value];
 
     document.getElementById('date').innerHTML = frame.date;
-    document.getElementById('title').innerHTML = frame.title;
+    var title = document.getElementById('title')
+    title.innerHTML = frame.title;
+    title.href = frame.url;
     document.getElementById('description').innerHTML = frame.description;
     document.getElementById('map').src = img_prefix + frame.path;
 }

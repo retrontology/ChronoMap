@@ -69,6 +69,7 @@
 
     .date-increment-button {
         width: 5%;
+        font-size: xx-large;
     }
 
     .date-slider {
@@ -81,7 +82,8 @@
         align-items: center;
         justify-content: center;
         padding-left: 3%;
-        padding-right: 3%
+        padding-right: 3%;
+        overflow-y: auto;
     }
 
     .title-container {
@@ -135,7 +137,7 @@
     }
 
     .region-select {
-        font-size: xx-large;
+        font-size: xxx-large;
     }
 
     .map-container {
@@ -157,26 +159,31 @@
         justify-content: flex-end;
         height: 5%;
         margin: 5%;
+        mar
     }
 
     .date-container {
         height: 100%;
-        width: 25%;
+        width: 35%;
         display: flex;
         align-items: center;
+        justify-content: right;
+        margin-right: 1%
     }
 
     .date {
-        font-size: x-large;
+        font-size: xx-large;
+        text-align: right;
     }
 
     .slider-container {
-        width:75%;
+        width:65%;
         display: flex;
     }
 
     .date-increment-button {
         width: 10%;
+        font-size: xx-large;
     }
 
     .date-slider {
@@ -193,7 +200,7 @@
     }
 
     .title {
-        font-size: xx-large;
+        font-size: xxx-large;
         margin: auto;
     }
 
@@ -202,7 +209,7 @@
     }
 
     .description {
-
+        font-size: x-large;
     }
 }
 
