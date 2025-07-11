@@ -83,11 +83,100 @@ function nextDate() {
     }
 }
 
-document.onkeyup = function(e) {
-    if (e.key == "ArrowLeft"){
-        prevDate();
+var swipe_event = null;
+
+class SwipeEvent {
+
+    static THRESHOLD = 50;
+
+    static RIGHT = 'right';
+    static LEFT = 'left';
+    static UP = 'up';
+    static DOWN = 'down';
+
+    constructor(event) {
+        this.direction = null;
+        this.start_event = event;
     }
-    else if (e.key == "ArrowRight"){
-        nextDate();
+
+    endSwipe(event) {
+        this.end_event = event;
+
+        let start = this.start_event.changedTouches[0];
+        let end = this.end_event.changedTouches[0];
+
+        if (!start || !end) { return; }
+
+        let d_x = start.screenX - end.screenX;
+        let d_y = start.screenY - end.screenY;
+        let abs_x = Math.abs(d_x);
+        let abs_y = Math.abs(d_y);
+
+        let biggest = abs_x > abs_y ? abs_x : abs_y;
+        if (biggest <= SwipeEvent.THRESHOLD) { return; }
+        
+        if (abs_x > abs_y) {
+            if (d_x > 0) {
+                this.direction = SwipeEvent.LEFT;
+            }
+            else {
+                this.direction = SwipeEvent.RIGHT;
+            }
+        }
+        else {
+            if (d_y > 0) {
+                this.direction = SwipeEvent.UP;
+            }
+            else {
+                this.direction = SwipeEvent.DOWN;
+            }
+        }
+
+        return this.direction;
     }
-};
+}
+
+function startSwipe(event) {
+    swipe_event = new SwipeEvent(event);
+}
+
+function endSwipe(event) {
+    if (!swipe_event){ return; }
+
+    let direction = swipe_event.endSwipe(event)
+    switch(direction) {
+        case SwipeEvent.RIGHT:
+            prevDate();
+            break;
+        case SwipeEvent.LEFT:
+            nextDate();
+            break;
+        case SwipeEvent.UP:
+            nextDate();
+            break;
+        case SwipeEvent.DOWN:
+            prevDate();
+            break;
+    }
+
+    swipe_event = null;
+}
+
+map = document.getElementById("map");
+map.addEventListener('touchstart', (event) => startSwipe(event));
+map.addEventListener('touchend', (event) => endSwipe(event));
+
+document.addEventListener('keydown', (event) => {
+    switch (event.key) {
+        case 'ArrowLeft':
+            prevDate();
+            break;
+        case 'ArrowRight':
+            nextDate();
+            break;
+    }
+})
+
+populateRegions();
+
+
