@@ -17,7 +17,7 @@ class Frame:
         return {
             "id": self.id,
             "region": self.region,
-            "date": self.date.isoformat(),
+            "date": self.date.strftime("%B %d, %Y"),
             "title": self.title,
             "description": self.description,
             "url": self.url,
