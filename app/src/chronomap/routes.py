@@ -6,10 +6,6 @@ import json
 
 bp = Blueprint("main", __name__)
 
-@bp.route("/")
-def index():
-    return "Hello from Chronomap!"
-
 @bp.route('/regions/')
 def get_regions():
     regions = database.get_regions()

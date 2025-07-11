@@ -14,6 +14,12 @@ class Frame:
 
 
     def to_dict(self) -> dict[str, str]:
+        """
+        Convert the Frame object to a dictionary.
+        
+        Returns:
+            dict[str, str]: A dictionary representation of the Frame object.
+        """
         return {
             "id": self.id,
             "region": self.region,
