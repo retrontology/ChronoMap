@@ -54,6 +54,7 @@ async function changeRegion() {
     slider.min = 0;
     slider.max = frames.length - 1;
     slider.value = 0;
+    changeDate();
 }
 
 async function populateRegions() {
@@ -67,7 +68,6 @@ async function populateRegions() {
         select.appendChild(option);
     }
     await changeRegion();
-    changeDate();
 }
 
 function changeDate() {
