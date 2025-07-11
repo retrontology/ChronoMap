@@ -1,21 +1,6 @@
 var frames = []
 const img_prefix = '/media/'
 
-function slugify(value, allowUnicode = false) {
-
-    value = String(value);
-
-    if (allowUnicode) {
-        value = value.normalize('NFKC');
-    } else {
-        value = value.normalize('NFKD').replace(/[\u0300-\u036f]/g, '');
-    }
-
-    value = value.toLowerCase().replace(/[^\w\s-]/g, '');
-    return value.trim().replace(/[-\s]+/g, '-').replace(/^[-_]+|[-_]+$/g, '');
-
-}
-
 async function getRegions() {
     const url = '/regions/'
     try {
