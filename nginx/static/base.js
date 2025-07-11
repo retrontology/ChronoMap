@@ -13,17 +13,40 @@ function slugify(value, allowUnicode = false) {
 
 }
 
-function updateRegion() {
+async function getRegions() {
+    const url = '/regions/'
+    try {
+        const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error(`Response status: ${response.status}`);
+        }
+
+        const json = await response.json();
+        return json;
+    } catch (error) {
+        console.error(error.message);
+    }
 
 }
 
-function populateRegions() {
-    
+function changeRegion() {
 
-    updateRegion();
 }
 
-function updateDate() {
+async function populateRegions() {
+    var select = document.getElementById('region-select');
+    select.innerHTML = '';
+    var regions = await getRegions();
+    for (var i = 0; i < regions.length; i++) {
+        var option = document.createElement('option');
+        option.value = regions[i];
+        option.text = regions[i];
+        select.appendChild(option);
+    }
+    //changeRegion();
+}
+
+function changeDate() {
 
 }
 
@@ -35,12 +58,11 @@ function nextDate() {
     
 }
 
-populateRegions();
-$(document).keypress(function(e){
-    if (e.which == 37){
+document.onkeyup = function(e) {
+    if (e.key == 37){
         prevDate();
     }
-    else if (e.which == 39){
+    else if (e.key == 39){
         nextDate();
     }
-});
+};
