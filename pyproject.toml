@@ -13,6 +13,8 @@ dynamic = ["version"]
 name = "ChronoMap"
 dependencies = [
   "Flask==3.1.1",
+  "python-dotenv==1.1.1",
+  "gunicorn==23.0.0"
 ]
 requires-python = ">= 3.11"
 authors = [
@@ -22,3 +24,6 @@ description = ""
 readme = "README.md"
 license = "MIT"
 license-files = ["LICENSE"]
+
+[project.scripts]
+chronomap = "chronomap.__init__:create_app"
