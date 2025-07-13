@@ -31,6 +31,31 @@ async function getRegionFrames(region) {
     }
 }
 
+async function getFrameData(frame_id) {
+    const url = '/frame/' + frame_id;
+    try {
+        const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error(`Response status: ${response.status}`);
+        }
+        const text = await response.text();
+        return text;
+    } catch (error) {
+        console.error(error.message);
+    }
+}
+
+async function preloadRegion() {
+    var element = document.createElement('div');
+    element.style.display = 'none';
+    document.body.appendChild(element);
+    for (var i = 0; i < frames.length; i++) {
+        let data = await getFrameData(frames[i].id);
+        element.innerHTML = data;
+    }
+    element.remove()
+}
+
 async function changeRegion() {
     var region = document.getElementById('region-select').value;
     frames = await getRegionFrames(region);
@@ -39,7 +64,8 @@ async function changeRegion() {
     slider.min = 0;
     slider.max = frames.length - 1;
     slider.value = 0;
-    changeDate();
+    await changeDate();
+    await preloadRegion();
 }
 
 async function populateRegions() {
@@ -55,7 +81,7 @@ async function populateRegions() {
     await changeRegion();
 }
 
-function changeDate() {
+async function changeDate() {
     var slider = document.getElementById('date-slider');
     var frame = frames[slider.value];
 
@@ -64,22 +90,23 @@ function changeDate() {
     title.innerHTML = frame.title;
     title.href = frame.url;
     document.getElementById('description').innerHTML = frame.description;
-    document.getElementById('map').src = img_prefix + frame.path;
+    const data = await getFrameData(frame.id);
+    document.getElementById('map').innerHTML = data;
 }
 
-function prevDate() {
+async function prevDate() {
     var slider = document.getElementById('date-slider');
     if (parseInt(slider.value) > parseInt(slider.min)) {
         slider.value--;
-        changeDate();
+        await changeDate();
     }
 }
 
-function nextDate() {
+async function nextDate() {
     var slider = document.getElementById('date-slider');
     if (parseInt(slider.value) <= parseInt(slider.max)) {
         slider.value++;
-        changeDate();
+        await changeDate();
     }
 }
 
@@ -140,22 +167,22 @@ function startSwipe(event) {
     swipe_event = new SwipeEvent(event);
 }
 
-function endSwipe(event) {
+async function endSwipe(event) {
     if (!swipe_event){ return; }
 
     let direction = swipe_event.endSwipe(event)
     switch(direction) {
         case SwipeEvent.RIGHT:
-            prevDate();
+            await prevDate();
             break;
         case SwipeEvent.LEFT:
-            nextDate();
+            await nextDate();
             break;
         case SwipeEvent.UP:
-            nextDate();
+            await nextDate();
             break;
         case SwipeEvent.DOWN:
-            prevDate();
+            await prevDate();
             break;
     }
 
@@ -164,15 +191,15 @@ function endSwipe(event) {
 
 map = document.getElementById("map");
 map.addEventListener('touchstart', (event) => startSwipe(event));
-map.addEventListener('touchend', (event) => endSwipe(event));
+map.addEventListener('touchend', async function(event) {await endSwipe(event)});
 
-document.addEventListener('keydown', (event) => {
+document.addEventListener('keydown', async function(event) {
     switch (event.key) {
         case 'ArrowLeft':
-            prevDate();
+            await prevDate();
             break;
         case 'ArrowRight':
-            nextDate();
+            await nextDate();
             break;
     }
 })

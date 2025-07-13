@@ -16,7 +16,6 @@ services:
       - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
       - socket_volume:/mnt/socket
       - ./nginx/static:/mnt/static:ro
-      - /mnt/media/Downloads/atlas_images:/mnt/media:ro
     depends_on:
       - flask
 

@@ -10,7 +10,6 @@ class Frame:
     title: str
     description: str
     url: str
-    path: str
 
 
     def to_dict(self) -> dict[str, str]:
@@ -27,5 +26,4 @@ class Frame:
             "title": self.title,
             "description": self.description,
             "url": self.url,
-            "path": self.path,
         }
