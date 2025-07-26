@@ -1,3 +1,38 @@
+html, body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+*, *::before, *::after {
+    box-sizing: inherit;
+}
+
+.base-container {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: row;
+}
+
+.content-container {
+    flex: 7 1 0%;   /* 70% of space, can shrink/grow */
+    min-width: 0;   /* Prevents overflow from flex children */
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-container {
+    flex: 3 1 0%;   /* 30% of space, can shrink/grow */
+    min-width: 0;
+    height: 100%;
+    overflow-y: auto;
+}
+
 @media screen and (orientation: landscape) {
     .body {
         display: flex;
@@ -114,6 +149,18 @@
 }
 
 @media screen and (orientation: portrait) {
+    .base-container {
+        flex-direction: column;
+        height: 100vh;
+        width: 100vw;
+    }
+    .content-container,
+    .sidebar-container {
+        width: 100%;
+        min-width: 0;
+        height: auto;
+        flex: none;
+    }
     .body {
         width: 100%;
         height: 100%;
@@ -214,12 +261,7 @@
     width: 100%;
 }
 
-body {
-    margin: 0px;
-}
-
 .tj-map-display {
-    aspect-ratio: 900 / 624;
     width: 100%;
     height: 100%;
 }
@@ -229,6 +271,29 @@ body {
     height: 100%;
 }
 
+/* --- Map Container and Map Sizing for Aspect Ratio --- */
+.map-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* No max-width or max-height set */
+}
+
 .map {
     width: 100%;
+    height: auto;
+    aspect-ratio: 900 / 624; /* or your desired ratio */
+    max-height: 100%;
+    /* Remove display: flex, align-items, justify-content */
+    object-fit: contain;
+}
+
+.description-container {
+    color: black;
+}
+
+.title {
+    color: black;
 }

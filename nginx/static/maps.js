@@ -16,7 +16,6 @@ function drawEventLine(canvas, eventId, targetX, targetY, strokeStyle, useVertic
     }
     
     var containerRect = canvasContainer.getBoundingClientRect();
-    var canvasRect = canvas.canvas.getBoundingClientRect();
     
     // Calculate scaling factors between canvas and container
     var scaleX = canvas.canvas.width / containerRect.width;
@@ -42,7 +41,11 @@ function drawEventLine(canvas, eventId, targetX, targetY, strokeStyle, useVertic
     var eventWidth = eventElement.offsetWidth - 1;
     var eventHeight = eventElement.offsetHeight - 1;
     
-    // Calculate start position (p, w) and end position (targetX, targetY)
+    // Convert target percentages to pixels
+    var targetXPixels = (targetX / 100) * containerRect.width;
+    var targetYPixels = (targetY / 100) * containerRect.height;
+    
+    // Calculate start position (p, w) and end position (targetXPixels, targetYPixels)
     var startX = eventLeft;
     var startY = eventTop;
     
@@ -50,11 +53,11 @@ function drawEventLine(canvas, eventId, targetX, targetY, strokeStyle, useVertic
         // Complex line calculation for negative start percent
         var centerX = (2 * eventLeft + eventWidth) / 2;
         var centerY = (2 * eventTop + eventHeight) / 2;
-        var slope = (targetY - centerY) / (targetX - centerX);
+        var slope = (targetYPixels - centerY) / (targetXPixels - centerX);
         var offset = slope * eventWidth / 2;
         
         if (-eventHeight / 2 <= offset && offset <= eventHeight / 2) {
-            if (centerX < targetX) {
+            if (centerX < targetXPixels) {
                 startX = eventLeft + eventWidth;
                 startY = centerY + offset;
             } else {
@@ -62,7 +65,7 @@ function drawEventLine(canvas, eventId, targetX, targetY, strokeStyle, useVertic
                 startY = centerY - offset;
             }
         } else {
-            if (centerY < targetY) {
+            if (centerY < targetYPixels) {
                 startX = centerX + eventHeight / 2 / slope;
                 startY = eventTop + eventHeight;
             } else {
@@ -75,11 +78,11 @@ function drawEventLine(canvas, eventId, targetX, targetY, strokeStyle, useVertic
         var percent = startPercent / 100 || 0.5;
         if (useVerticalStart) {
             startY = eventTop + eventHeight * percent;
-            if (eventLeft < targetX) {
+            if (eventLeft < targetXPixels) {
                 startX = eventLeft + eventWidth - 1;
             }
         } else {
-            if (targetY < eventTop) {
+            if (targetYPixels < eventTop) {
                 startX = eventLeft + eventWidth * percent;
             } else {
                 startX = eventLeft + eventWidth * percent;
@@ -91,8 +94,8 @@ function drawEventLine(canvas, eventId, targetX, targetY, strokeStyle, useVertic
     // Scale coordinates to canvas space
     var canvasStartX = startX * scaleX;
     var canvasStartY = startY * scaleY;
-    var canvasTargetX = targetX * scaleX;
-    var canvasTargetY = targetY * scaleY;
+    var canvasTargetX = targetXPixels * scaleX;
+    var canvasTargetY = targetYPixels * scaleY;
     
     // Draw the line
     canvas.strokeStyle = strokeStyle;
