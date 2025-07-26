@@ -40,9 +40,10 @@
     }
 
     .map {
-        max-height: 100%;
         width: 100%;
-        object-fit: contain;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
     .footer-container {
@@ -208,3 +209,26 @@
     }
 }
 
+.events-canvas {
+    height: 100%;
+    width: 100%;
+}
+
+body {
+    margin: 0px;
+}
+
+.tj-map-display {
+    aspect-ratio: 900 / 624;
+    width: 100%;
+    height: 100%;
+}
+
+.tj-map-img {
+    width: 100%;
+    height: 100%;
+}
+
+.map {
+    width: 100%;
+}

@@ -65,7 +65,7 @@ async function changeRegion() {
     slider.max = frames.length - 1;
     slider.value = 0;
     await changeDate();
-    await preloadRegion();
+    //await preloadRegion();
 }
 
 async function populateRegions() {
@@ -92,6 +92,7 @@ async function changeDate() {
     document.getElementById('description').innerHTML = frame.description;
     const data = await getFrameData(frame.id);
     document.getElementById('map').innerHTML = data;
+    showEvents();
 }
 
 async function prevDate() {

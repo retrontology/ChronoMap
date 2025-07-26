@@ -33,5 +33,13 @@
             </div>
         </div>
     </div>
+    <script src="https://omniatlas-media.s3.amazonaws.com/static/js/lib/jquery-3.2.1.min.js" defer></script>
+    <script src="maps.js" defer onload="initMapEvents()"></script>
+    <script src="base.js"></script>
+    <script type="text/javascript">
+        function initMapEvents() {                
+            window.addEventListener('resize', function() { showEvents(); });
+        }
+    </script>
 </body>
-<script src="base.js"></script>
+
